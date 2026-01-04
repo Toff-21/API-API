@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+         .anime-item img {
+            width: 200px;
+            height: auto;
+        }
+        .anime-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="anime-item"></div>
+
+</body>
+</html>
+<button onclick="getAnime()">Lihat Daftar</button>
+
+<script>
+function getAnime() {
+    const settings = {
+        async: true,
+        crossDomain: true,
+        url: 'https://myanimelist.p.rapidapi.com/anime/top/all?p=1',
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': '8c0d5ff539msh99568e6e798ab24p13c900jsn5753399bce58',
+            'x-rapidapi-host': 'myanimelist.p.rapidapi.com',
+        }
+    };
+
+    $.ajax(settings).done(function (response) {
+        let html = "";
+        for (let i = 0; i < response.length; i++) {
+
+            html += `
+                <div class="anime">
+                    <img src="${response[i].picture}" alt="${response[i].title}">
+                    <h2>${response[i].title}</h2>
+                    <p>${response[i].rank}</p>
+                </div>
+            `;
+        }
+        document.querySelector(".anime-item").innerHTML = html;
+    });
+}
+</script>
